@@ -17,6 +17,7 @@ export function useUser() {
       const response = await axios.post(`${API_URL}/users/register`, data);
       console.log("Wywołanie register sukces");
       setLoading(false);
+      location.reload();
       return response.data;
     } catch (err) {
       console.log("Wywołanie register błąd", err);

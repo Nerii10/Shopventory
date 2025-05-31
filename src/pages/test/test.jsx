@@ -8,7 +8,7 @@ import { useFetch } from "../../hooks/useFetch";
 export default function Test() {
   const { register, login, token, userData, API_URL } = useUser();
   const { addItems, loading: ItemLoading } = useItems({ token });
-  const { addSale, loading: SaleLoading } = useSales({ token });
+  const { addSale, removeSale, loading: SaleLoading } = useSales({ token });
   const { fetchData } = useFetch({ token });
 
   const [authData, setAuthData] = useState({
@@ -127,10 +127,16 @@ export default function Test() {
       <div>
         <h1>DODAJ PRZEDMIOT</h1>
 
-        {itemData.map((item, index) => {
-          return (
-            <div key={index}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addItems(itemData);
+          }}
+        >
+          {itemData.map((item, index) => (
+            <div key={index} style={{ marginBottom: "10px" }}>
               <input
+                required
                 placeholder="Kod przedmiotu"
                 value={item.Code}
                 onChange={(e) => {
@@ -146,6 +152,7 @@ export default function Test() {
               />
               <input
                 placeholder="Nazwa przedmiotu"
+                required
                 value={item.Name}
                 onChange={(e) => {
                   setItemData((prev) => {
@@ -157,9 +164,27 @@ export default function Test() {
                     return newItems;
                   });
                 }}
+                style={{ marginLeft: "8px" }}
+              />
+              <input
+                placeholder="Marka"
+                required
+                value={item.Brand}
+                onChange={(e) => {
+                  setItemData((prev) => {
+                    const newItems = [...prev];
+                    newItems[index] = {
+                      ...newItems[index],
+                      Brand: e.target.value,
+                    };
+                    return newItems;
+                  });
+                }}
+                style={{ marginLeft: "8px" }}
               />
               <input
                 placeholder="Cena zakupu"
+                required
                 value={item.BuyPrice}
                 onChange={(e) => {
                   setItemData((prev) => {
@@ -171,9 +196,11 @@ export default function Test() {
                     return newItems;
                   });
                 }}
+                style={{ marginLeft: "8px" }}
               />
               <input
                 placeholder="Domyslna cena sprzedazy"
+                required
                 value={item.SellPrice}
                 onChange={(e) => {
                   setItemData((prev) => {
@@ -185,29 +212,35 @@ export default function Test() {
                     return newItems;
                   });
                 }}
+                style={{ marginLeft: "8px" }}
               />
+              <button
+                type="button"
+                onClick={() => {
+                  setItemData((prev) => prev.filter((_, i) => i !== index));
+                }}
+                style={{ marginLeft: "8px", color: "red" }}
+                aria-label="Usuń przedmiot"
+              >
+                -
+              </button>
             </div>
-          );
-        })}
+          ))}
 
-        <button
-          onClick={() => {
-            setItemData((prev) => [
-              ...prev,
-              { Code: "", Name: "", BuyPrice: "", SellPrice: "" },
-            ]);
-          }}
-        >
-          Dodaj nowy przedmiot +
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              setItemData((prev) => [
+                ...prev,
+                { Code: "", Name: "", BuyPrice: "", SellPrice: "" },
+              ]);
+            }}
+          >
+            Dodaj nowy przedmiot +
+          </button>
 
-        <button
-          onClick={() => {
-            addItems(itemData);
-          }}
-        >
-          Zapisz Przedmioty
-        </button>
+          <button type="submit">Zapisz Przedmioty</button>
+        </form>
       </div>
 
       <hr></hr>
@@ -215,66 +248,87 @@ export default function Test() {
       <div>
         <h1>REJESTRUJ SPRZEDAŻ</h1>
         <a>data sprzedazy</a>
-        <input type="date" onChange={(e) => setSaleDate(e.target.value)} />
 
-        <br></br>
-        {saleData.map((sale, index) => (
-          <div key={index}>
-            <select
-              value={sale.Code}
-              onChange={(e) => {
-                setSaleData((prev) => {
-                  const newSales = [...prev];
-                  newSales[index] = {
-                    ...newSales[index],
-                    Code: e.target.value,
-                  };
-                  return newSales;
-                });
-              }}
-            >
-              <option value="" disabled>
-                Wybierz kod
-              </option>
-              {items?.map((item, index) => {
-                return (
-                  <option value={item.code}>
-                    {item.code}-{item.name}
-                  </option>
-                );
-              })}
-            </select>
-            <input
-              placeholder="Cena sprzedaży"
-              value={sale.SellPrice}
-              onChange={(e) => {
-                setSaleData((prev) => {
-                  const newSales = [...prev];
-                  newSales[index] = {
-                    ...newSales[index],
-                    SellPrice: e.target.value,
-                  };
-                  return newSales;
-                });
-              }}
-            />
-          </div>
-        ))}
-
-        <button
-          onClick={() => {
-            setSaleData((prev) => [...prev, { Code: "", SellPrice: "" }]);
-          }}
-        >
-          Dodaj sprzedaż +
-        </button>
-        <button
-          onClick={() => {
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
             addSale({ saleData, saleDate });
           }}
         >
-          Zapisz Sprzedaz
-        </button>
+          <input
+            required
+            type="date"
+            onChange={(e) => setSaleDate(e.target.value)}
+          />
+
+          <br />
+          {saleData.map((sale, index) => (
+            <div key={index} style={{ marginBottom: "10px" }}>
+              <select
+                value={sale.Code}
+                required
+                onChange={(e) => {
+                  setSaleData((prev) => {
+                    const newSales = [...prev];
+                    newSales[index] = {
+                      ...newSales[index],
+                      Code: e.target.value,
+                    };
+                    return newSales;
+                  });
+                }}
+              >
+                <option value="" disabled>
+                  Wybierz kod
+                </option>
+                {items?.map((item) => (
+                  <option key={item.code} value={item.code}>
+                    {item.code} - {item.name}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                placeholder="Cena sprzedaży"
+                required
+                value={sale.SellPrice}
+                onChange={(e) => {
+                  setSaleData((prev) => {
+                    const newSales = [...prev];
+                    newSales[index] = {
+                      ...newSales[index],
+                      SellPrice: e.target.value,
+                    };
+                    return newSales;
+                  });
+                }}
+                style={{ marginLeft: "8px" }}
+              />
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSaleData((prev) => prev.filter((_, i) => i !== index));
+                }}
+                style={{ marginLeft: "8px", color: "red" }}
+                aria-label="Usuń sprzedaż"
+              >
+                -
+              </button>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() => {
+              setSaleData((prev) => [...prev, { Code: "", SellPrice: "" }]);
+            }}
+          >
+            Dodaj sprzedaż +
+          </button>
+
+          <button type="submit">Zapisz Sprzedaz</button>
+        </form>
       </div>
 
       <hr></hr>
@@ -292,7 +346,7 @@ export default function Test() {
             items?.map((item) => {
               return (
                 <p>
-                  {item.code} - {item.name}
+                  {item.code} ({item.brand})  - {item.name}
                 </p>
               );
             })}
@@ -303,10 +357,19 @@ export default function Test() {
           {sales &&
             sales?.map((sale) => {
               return (
-                <p>
-                  {sale.code} - {sale.name} - {sale.sellprice} -{" "}
-                  {new Date(sale.created_at).toLocaleDateString()}
-                </p>
+                <div style={{ border: "1px gray solid" }}>
+                  <p>
+                    {sale.code} - {sale.name} - {sale.sellprice} -{" "}
+                    {new Date(sale.created_at).toLocaleDateString()}
+                  </p>
+                  <button
+                    onClick={() => {
+                      removeSale(sale);
+                    }}
+                  >
+                    Usun
+                  </button>
+                </div>
               );
             })}
         </div>
