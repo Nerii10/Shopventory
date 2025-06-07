@@ -4,7 +4,10 @@ import { jwtDecode } from "jwt-decode";
 import { useItems } from "../../hooks/useItems";
 import { useSales } from "../../hooks/useSales";
 import { useFetch } from "../../hooks/useFetch";
+import Input from "../../components/Input";
+import { LogIn } from "lucide-react";
 
+import "../../styles/Test.css";
 export default function Test() {
   const { register, login, token, userData, API_URL } = useUser();
   const { addItems, loading: ItemLoading } = useItems({ token });
@@ -25,9 +28,7 @@ export default function Test() {
   const [items, setItems] = useState();
   const [sales, setSales] = useState();
 
-  useEffect(() => {
-    console.log(saleDate);
-  }, [authData, itemData, saleData]);
+  useEffect(() => {}, [authData, itemData, saleData, items]);
 
   useEffect(() => {
     console.log(API_URL);
@@ -61,8 +62,70 @@ export default function Test() {
     }
   }, [token, ItemLoading, SaleLoading]);
 
+  const [value, setValue] = useState("");
+  const [select, setSelect] = useState();
+
+  useEffect(() => {
+    console.log(select);
+  }, [select]);
+
+  const inputConfigs = [
+    {
+      type: "button",
+      children: "Click",
+      width: "200px",
+    },
+    { type: "submit", children: "Submit", width: "200px" },
+    { type: "number", children: "Number", value, width: "200px" },
+    { type: "text", children: "Text", value, setValue, width: "200px" },
+    { type: "date", children: "sub", width: "200px" },
+    {
+      type: "select",
+      children: "sub",
+      width: "200px",
+      options: items?.map((item) => ({
+        value: item.id,
+        label: `${item.code} - ${item.name} / ${item.brand}`,
+      })),
+    },
+    {
+      type: "select",
+      children: "Search",
+      width: "200px",
+      value: select,
+      setValue: setSelect,
+      search: true,
+      options: items?.map((item) => ({
+        value: item.id,
+        label: `${item.code} - ${item.name} - ${item.brand}`,
+      })),
+    },
+    {
+      type: "select",
+      children: "Search",
+      width: "400px",
+      value: select,
+      setValue: setSelect,
+      search: true,
+      options: items?.map((item) => ({
+        value: item.id,
+        label: `${item.code} - ${item.name} / ${item.brand}`,
+      })),
+    },
+  ];
+
   return (
     <>
+      {/* <h1>Input tests</h1>
+
+      {inputConfigs.map((config, index) => (
+        <div key={index}>
+          <Input {...config} />
+          <br />
+        </div>
+      ))}
+
+      <hr></hr> */}
       {!token ? (
         <div>
           <h1>REJESTRUJ</h1>
@@ -84,7 +147,9 @@ export default function Test() {
               setAuthData((prev) => ({ ...prev, Password: e.target.value }));
             }}
           />
-          <button
+          <Input
+            type={"button"}
+            children={"Loguj"}
             onClick={async () => {
               if (authData.Email !== "" && authData.Email != null) {
                 try {
@@ -104,9 +169,7 @@ export default function Test() {
                 }
               }
             }}
-          >
-            Wyślij
-          </button>
+          ></Input>
         </div>
       ) : (
         <>
@@ -133,113 +196,121 @@ export default function Test() {
             addItems(itemData);
           }}
         >
-          {itemData.map((item, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <input
-                required
-                placeholder="Kod przedmiotu"
-                value={item.Code}
-                onChange={(e) => {
-                  setItemData((prev) => {
-                    const newItems = [...prev];
-                    newItems[index] = {
-                      ...newItems[index],
-                      Code: e.target.value,
-                    };
-                    return newItems;
-                  });
-                }}
-              />
-              <input
-                placeholder="Nazwa przedmiotu"
-                required
-                value={item.Name}
-                onChange={(e) => {
-                  setItemData((prev) => {
-                    const newItems = [...prev];
-                    newItems[index] = {
-                      ...newItems[index],
-                      Name: e.target.value,
-                    };
-                    return newItems;
-                  });
-                }}
-                style={{ marginLeft: "8px" }}
-              />
-              <input
-                placeholder="Marka"
-                required
-                value={item.Brand}
-                onChange={(e) => {
-                  setItemData((prev) => {
-                    const newItems = [...prev];
-                    newItems[index] = {
-                      ...newItems[index],
-                      Brand: e.target.value,
-                    };
-                    return newItems;
-                  });
-                }}
-                style={{ marginLeft: "8px" }}
-              />
-              <input
-                placeholder="Cena zakupu"
-                required
-                value={item.BuyPrice}
-                onChange={(e) => {
-                  setItemData((prev) => {
-                    const newItems = [...prev];
-                    newItems[index] = {
-                      ...newItems[index],
-                      BuyPrice: e.target.value,
-                    };
-                    return newItems;
-                  });
-                }}
-                style={{ marginLeft: "8px" }}
-              />
-              <input
-                placeholder="Domyslna cena sprzedazy"
-                required
-                value={item.SellPrice}
-                onChange={(e) => {
-                  setItemData((prev) => {
-                    const newItems = [...prev];
-                    newItems[index] = {
-                      ...newItems[index],
-                      SellPrice: e.target.value,
-                    };
-                    return newItems;
-                  });
-                }}
-                style={{ marginLeft: "8px" }}
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  setItemData((prev) => prev.filter((_, i) => i !== index));
-                }}
-                style={{ marginLeft: "8px", color: "red" }}
-                aria-label="Usuń przedmiot"
-              >
-                -
-              </button>
-            </div>
-          ))}
+          <div className="AddContainer">
+            {itemData.map((item, index) => (
+              <div key={index} className="Add">
+                <Input
+                  type={"text"}
+                  required={true}
+                  children="Kod"
+                  value={item.Code}
+                  setValue={(e) => {
+                    setItemData((prev) => {
+                      const newItems = [...prev];
+                      newItems[index] = {
+                        ...newItems[index],
+                        Code: e,
+                      };
+                      return newItems;
+                    });
+                  }}
+                />
 
-          <button
-            type="button"
-            onClick={() => {
-              setItemData((prev) => [
-                ...prev,
-                { Code: "", Name: "", BuyPrice: "", SellPrice: "" },
-              ]);
-            }}
-          >
-            Dodaj nowy przedmiot +
-          </button>
+                <Input
+                  type={"text"}
+                  required={true}
+                  children="Nazwa"
+                  value={item.Name}
+                  setValue={(e) => {
+                    setItemData((prev) => {
+                      const newItems = [...prev];
+                      newItems[index] = {
+                        ...newItems[index],
+                        Name: e,
+                      };
+                      return newItems;
+                    });
+                  }}
+                />
 
-          <button type="submit">Zapisz Przedmioty</button>
+                <Input
+                  type={"text"}
+                  required={true}
+                  children="Marka"
+                  value={item.Brand}
+                  setValue={(e) => {
+                    setItemData((prev) => {
+                      const newItems = [...prev];
+                      newItems[index] = {
+                        ...newItems[index],
+                        Brand: e,
+                      };
+                      return newItems;
+                    });
+                  }}
+                />
+
+                <Input
+                  type={"number"}
+                  required={true}
+                  children="Cena Zakupu"
+                  value={item.BuyPrice}
+                  setValue={(e) => {
+                    setItemData((prev) => {
+                      const newItems = [...prev];
+                      newItems[index] = {
+                        ...newItems[index],
+                        BuyPrice: e,
+                      };
+                      return newItems;
+                    });
+                  }}
+                />
+
+                <Input
+                  type={"number"}
+                  required={true}
+                  children="Cena Sprzedarzy"
+                  value={item.SellPrice}
+                  setValue={(e) => {
+                    setItemData((prev) => {
+                      const newItems = [...prev];
+                      newItems[index] = {
+                        ...newItems[index],
+                        SellPrice: e,
+                      };
+                      return newItems;
+                    });
+                  }}
+                />
+
+                <Input
+                  type={"button"}
+                  children="X"
+                  onClick={() => {
+                    setItemData((prev) => prev.filter((_, i) => i !== index));
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+
+          <br></br>
+          <br></br>
+          <div className="AddInputs">
+            <Input
+              type="button"
+              onClick={() => {
+                setItemData((prev) => [
+                  ...prev,
+                  { Code: "", Name: "", BuyPrice: "", SellPrice: "" },
+                ]);
+              }}
+            >
+              Dodaj nowy przedmiot +
+            </Input>
+            <Input type="submit">Zapisz Przedmioty</Input>
+          </div>
         </form>
       </div>
 
@@ -255,79 +326,76 @@ export default function Test() {
             addSale({ saleData, saleDate });
           }}
         >
-          <input
-            required
-            type="date"
-            onChange={(e) => setSaleDate(e.target.value)}
-          />
+          <Input required type="date" setValue={(e) => setSaleDate(e)} />
 
           <br />
+          <br />
           {saleData.map((sale, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <select
+            <div key={index} className="Add">
+              <Input
+                type={"select"}
+                search={true}
+                required={true}
+                children={"Przedmiot"}
                 value={sale.Code}
-                required
-                onChange={(e) => {
+                setValue={(e) => {
+                  console.log(e);
                   setSaleData((prev) => {
                     const newSales = [...prev];
                     newSales[index] = {
                       ...newSales[index],
-                      Code: e.target.value,
+                      Code: e.code,
                     };
                     return newSales;
                   });
                 }}
-              >
-                <option value="" disabled>
-                  Wybierz kod
-                </option>
-                {items?.map((item) => (
-                  <option key={item.code} value={item.code}>
-                    {item.code} - {item.name}
-                  </option>
-                ))}
-              </select>
+                options={items?.map((item) => ({
+                  code: item.code,
+                  label: `${item.code} - ${item.name} / ${item.brand}`,
+                }))}
+              ></Input>
 
-              <input
-                placeholder="Cena sprzedaży"
+              <Input
+                type={"number"}
+                children="Cena sprzedaży"
                 required
                 value={sale.SellPrice}
-                onChange={(e) => {
+                setValue={(e) => {
                   setSaleData((prev) => {
                     const newSales = [...prev];
                     newSales[index] = {
                       ...newSales[index],
-                      SellPrice: e.target.value,
+                      SellPrice: e,
                     };
                     return newSales;
                   });
                 }}
-                style={{ marginLeft: "8px" }}
               />
 
-              <button
+              <Input
                 type="button"
                 onClick={() => {
                   setSaleData((prev) => prev.filter((_, i) => i !== index));
                 }}
-                style={{ marginLeft: "8px", color: "red" }}
-                aria-label="Usuń sprzedaż"
               >
-                -
-              </button>
+                X
+              </Input>
             </div>
           ))}
+          <br />
+          <br />
 
-          <button
-            type="button"
-            onClick={() => {
-              setSaleData((prev) => [...prev, { Code: "", SellPrice: "" }]);
-            }}
-          >
-            Dodaj sprzedaż +
-          </button>
-
-          <button type="submit">Zapisz Sprzedaz</button>
+          <div className="AddInputs">
+            <Input
+              type="button"
+              onClick={() => {
+                setSaleData((prev) => [...prev, { Code: "", SellPrice: "" }]);
+              }}
+            >
+              Dodaj sprzedaż +
+            </Input>
+            <Input type="submit">Zapisz Sprzedaz</Input>
+          </div>
         </form>
       </div>
 
@@ -346,7 +414,7 @@ export default function Test() {
             items?.map((item) => {
               return (
                 <p>
-                  {item.code} ({item.brand})  - {item.name}
+                  {item.code} ({item.brand}) - {item.name}
                 </p>
               );
             })}

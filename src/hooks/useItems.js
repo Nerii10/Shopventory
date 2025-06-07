@@ -8,7 +8,6 @@ export function useItems({ token }) {
   const { API_URL } = useUser();
 
   async function addItems(data) {
-    console.log("Wywołanie items add");
     setLoading(true);
     setError(null);
     try {
@@ -17,11 +16,9 @@ export function useItems({ token }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Wywołanie items add sukces");
       setLoading(false);
       return response.data;
     } catch (err) {
-      console.log("Wywołanie items add błąd", err);
       setLoading(false);
       setError(err.response?.data || "Coś poszło nie tak");
       throw err;

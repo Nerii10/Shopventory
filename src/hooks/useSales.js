@@ -8,7 +8,6 @@ export function useSales({ token }) {
   const { API_URL } = useUser();
 
   async function addSale(data) {
-    console.log("Wywołanie sale add");
     setLoading(true);
     setError(null);
     try {
@@ -17,11 +16,9 @@ export function useSales({ token }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Wywołanie sale add sukces");
       setLoading(false);
       return response.data;
     } catch (err) {
-      console.log("Wywołanie sale add błąd", err);
       setLoading(false);
       setError(err.response?.data || "Coś poszło nie tak");
       throw err;
@@ -29,7 +26,6 @@ export function useSales({ token }) {
   }
 
   async function removeSale(data) {
-    console.log("Wywołanie sale remove");
     setLoading(true);
     setError(null);
     try {
@@ -38,11 +34,9 @@ export function useSales({ token }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Wywołanie sale remove sukces");
       setLoading(false);
       return response.data;
     } catch (err) {
-      console.log("Wywołanie sale remove błąd", err);
       setLoading(false);
       setError(err.response?.data || "Coś poszło nie tak");
       throw err;

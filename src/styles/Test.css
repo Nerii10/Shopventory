@@ -1,0 +1,21 @@
+.Add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.AddContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.AddInputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}

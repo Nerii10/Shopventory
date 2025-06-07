@@ -6,7 +6,6 @@ export function useFetch({ token }) {
   const [error, setError] = useState(null);
 
   async function fetchData(url) {
-    console.log("Wywołanie data get");
     setLoading(true);
     setError(null);
     try {
@@ -15,11 +14,9 @@ export function useFetch({ token }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Wywołanie data get sukces");
       setLoading(false);
       return response.data;
     } catch (err) {
-      console.log("Wywołanie data get  błąd", err);
       setLoading(false);
       setError(err.response?.data || "Coś poszło nie tak");
       throw err;

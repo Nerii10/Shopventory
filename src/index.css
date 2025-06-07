@@ -15,7 +15,10 @@
 body {
   margin: 0;
   display: flex;
-  background-color: #242424;
+  background-color: #737373;
   min-height: 100vh;
   height: 100dvh;
+  --default_box_shadow: 0px 0px 10px 0px black;
+  --default_border_radius: 7px;
+  --default_border: 1px black solid;
 }
