@@ -1,6 +1,8 @@
 name: Deploy to GitHub Pages
+
 permissions:
   contents: write
+
 on:
   push:
     branches:
@@ -25,6 +27,9 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: Debug
+        run: echo "✅ Build finished, proceeding to deploy..."
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
