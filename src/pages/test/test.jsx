@@ -414,7 +414,7 @@ export default function Test() {
             items?.map((item) => {
               return (
                 <p>
-                  {item.code} ({item.brand}) - {item.name}
+                  {item.code} ({item.brand}) - {item.name} <br></br> {item.sell_price} zł
                 </p>
               );
             })}
