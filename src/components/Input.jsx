@@ -38,7 +38,7 @@ export default function Input({
     );
   }
 
-  if (type === "text" || type === "number") {
+  if (type === "text" || type === "password" || type === "number") {
     return (
       <Char
         disabled={disabled}

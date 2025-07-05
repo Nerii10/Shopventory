@@ -3,22 +3,27 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--font_color);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
+  overflow: hidden;
   height: 100dvh;
 }
 
 body {
   margin: 0;
   display: flex;
-  background-color: #737373;
+  background-color: var(--main_color);
   min-height: 100vh;
   height: 100dvh;
   --default_box_shadow: 0px 0px 10px 0px black;
   --default_border_radius: 7px;
-  --default_border: 1px black solid;
+  --default_border: 1px rgb(200, 200, 200) solid;
+  --accent_color1: rgb(44, 44, 44);
+  --accent_color2: gray;
+  --main_color: rgb(30, 30, 30);
+  --font_color: rgb(255, 255, 255);
 }

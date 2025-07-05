@@ -30,11 +30,21 @@ export function useUser() {
     try {
       const response = await axios.post(`${API_URL}/users/login`, data);
       setLoading(false);
+      localStorage.setItem("ShopventoryToken", response.data.token);
+      location.reload();
       return response.data;
     } catch (err) {
       setLoading(false);
       setError(err.response?.data || "Coś poszło nie tak");
       throw err;
+    }
+  }
+
+  function logout() {
+    const token = localStorage.getItem("ShopventoryToken");
+    if (token) {
+      localStorage.removeItem("ShopventoryToken");
+      location.reload();
     }
   }
 
@@ -47,5 +57,5 @@ export function useUser() {
     }
   }, []);
 
-  return { register, login, token, userData, loading, error, API_URL };
+  return { register, login, logout, token, userData, loading, error, API_URL };
 }
