@@ -14,10 +14,16 @@ export default function Sales() {
         return (
           <>
             <p>
-              {new Date(sale.created_at).toLocaleDateString()} - ({sale.brand}) - {sale.name} /{" "}
-              {sale.sellprice}zł
+              {new Date(sale.created_at).toLocaleDateString()} - ({sale.brand})
+              - {sale.name} / {sale.sellprice}zł
             </p>
-            <Input type={'button'} children={"X"} onClick={()=>{removeSale(sale)}}/>
+            <Input
+              type={"button"}
+              children={"X"}
+              onClick={() => {
+                removeSale(sale);
+              }}
+            />
             <hr></hr>
           </>
         );
@@ -57,6 +63,7 @@ export function AddSaleForm({ items }) {
                 newSales[index] = {
                   ...newSales[index],
                   Code: e.code,
+                  SellPrice: e.sell_price,
                 };
                 return newSales;
               });
@@ -64,6 +71,7 @@ export function AddSaleForm({ items }) {
             options={items?.map((item) => ({
               code: item.code,
               label: `${item.code} - ${item.name} / ${item.brand}`,
+              sell_price: item.sell_price,
             }))}
           ></Input>
 

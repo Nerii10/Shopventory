@@ -292,7 +292,10 @@ function Select({
         className="input select"
         value={value}
         onChange={(e) => {
-          setValue(e.target.value);
+          const selected = options.find(
+            (opt) => opt.code === e.target.value || opt.value === e.target.value
+          );
+          setValue(selected);
         }}
       >
         <option value="" disabled hidden>
