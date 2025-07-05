@@ -38,9 +38,9 @@ export const ShopProvider = ({ children }) => {
   };
 
   const fetchStats = async () => {
-    const data = await fetchData(`${API_URL}/stat/today`);
-    setStats((prev) => ({ ...prev, today: data }));
-    console.log(data);
+    const today = await fetchData(`${API_URL}/stat/today`);
+    const allTime = await fetchData(`${API_URL}/stat/allTime`);
+    setStats((prev) => ({ ...prev, today: today, allTime: allTime }));
   };
 
   //Sales
