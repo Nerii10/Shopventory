@@ -1,0 +1,36 @@
+.stats_wrapper {
+  width: 100%;
+  background-color: rgb(239, 239, 239);
+  border-radius: var(--default_border_radius);
+  border: var(--default_border);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.stats_top {
+  padding: 5px 0px;
+}
+
+.stats_bottom {
+  aspect-ratio: 1/0.5;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
+  align-items: flex-end;
+}
+
+.stat_bar {
+  height: 100%;
+  background-color: rgb(59, 59, 59);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.stat_bar_amount {
+  margin-top: 10px;
+  color: white;
+}

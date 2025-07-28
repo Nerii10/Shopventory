@@ -37,13 +37,13 @@ function Digit({ place, value, height, digitStyle }) {
 
 export default function Counter({
   value,
-  fontSize = 100,
+  fontSize = 50,
   padding = 0,
   places = [100, 10, 1],
   gap = 8,
   borderRadius = 4,
-  horizontalPadding = 8,
-  textColor = "white",
+  horizontalPadding = 5,
+  textColor = "black",
   fontWeight = "bold",
   containerStyle,
   counterStyle,

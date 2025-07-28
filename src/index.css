@@ -23,8 +23,8 @@ body {
   --default_box_shadow: 0px 0px 10px 0px black;
   --default_border_radius: 7px;
   --default_border: 1px rgb(200, 200, 200) solid;
-  --accent_color1: rgb(44, 44, 44);
-  --accent_color2: gray;
-  --main_color: rgb(30, 30, 30);
-  --font_color: rgb(255, 255, 255);
+  --accent_color1: rgb(26, 24, 24);
+  --accent_color2: rgb(80, 80, 80);
+  --main_color: rgb(11, 11, 11);
+  --font_color: rgb(32, 32, 32);
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, memo, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"; // poprawny import
 import { useFetch } from "../hooks/useFetch";
 import { useUser } from "../hooks/useUser";
@@ -24,6 +24,25 @@ export const ShopProvider = ({ children }) => {
   const [sales, setSales] = useState([]);
   const [stats, setStats] = useState([]);
 
+  useEffect(() => {
+    const keepServerAwake = () => {
+      axios
+        .get(`${API_URL}/`)
+        .then(() => {
+          console.log("Serwer online");
+        })
+        .catch((err) => {
+          console.error("Błąd podczas pingowania serwera:", err);
+        });
+    };
+
+    keepServerAwake();
+
+    const interval = setInterval(keepServerAwake, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   //Fetching
   const fetchItems = async () => {
     const data = await fetchData(`${API_URL}/items/all`);
@@ -40,7 +59,15 @@ export const ShopProvider = ({ children }) => {
   const fetchStats = async () => {
     const today = await fetchData(`${API_URL}/stat/today`);
     const allTime = await fetchData(`${API_URL}/stat/allTime`);
-    setStats((prev) => ({ ...prev, today: today, allTime: allTime }));
+    const yearStats = await fetchData(`${API_URL}/stat/yearStats?year=${2025}`);
+
+    console.log(yearStats);
+    setStats((prev) => ({
+      ...prev,
+      today: today,
+      allTime: allTime,
+      yearStats: yearStats,
+    }));
   };
 
   //Sales

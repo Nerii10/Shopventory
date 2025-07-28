@@ -54,7 +54,6 @@
 /* Other */
 
 .input_container {
-  background-color: gray;
   width: var(--width);
   display: inline-block;
   height: var(--height);
