@@ -46,7 +46,7 @@ export default function Items() {
         return (
           <>
             <p>
-              {item.code} - ({item.brand})-{item.name} / {item.sell_price}zł
+              {item.code} - ({item.brand})-{item.name} / {item.sell_price}zł ({item.buy_price}zł)
             </p>
             <hr></hr>
           </>

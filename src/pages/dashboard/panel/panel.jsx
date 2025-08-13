@@ -21,18 +21,7 @@ export default function Panel() {
 
   return (
     <section className="dashboard-page-wrapper">
-      {/* <p>
-        Zarobki <strong>dzisiaj</strong>
-      </p>
-
-      <p>Całkowita sprzedaz: {stats?.today?.total}zł</p>
-      <p>Zysk: {stats?.today?.profit}zł</p>
-
-      <p>
-        Zarobki <strong>od początku</strong>
-      </p>
-      <p>Całkowita sprzedaz: {stats?.allTime?.total}zł</p>
-      <p>Zysk: {stats?.allTime?.profit}zł</p> */}
+      
       <h1>Hej {userData?.login || "..."}</h1>
       <p style={{ display: "flex", alignItems: "center", gap: 0 }}>
         <Counter
@@ -52,7 +41,7 @@ export default function Panel() {
         />
       </p>
 
-      <StatsOverview data={stats.yearStats}/>
+      <StatsOverview data={stats}/>
     </section>
   );
 }

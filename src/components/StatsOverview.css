@@ -1,36 +1,85 @@
 .stats_wrapper {
+}
+
+.stats_chart {
+  min-width: 300px;
   width: 100%;
-  background-color: rgb(239, 239, 239);
+  max-width: 500px;
+  background-color: rgb(74, 74, 74);
+  aspect-ratio: 1/0.6;
+  display: flex;
   border-radius: var(--default_border_radius);
-  border: var(--default_border);
+  overflow: hidden;
+  align-items: start;
+  flex-direction: column;
+}
+
+.stats_chart_top{
+  width: 100%;
   padding: 10px;
   box-sizing: border-box;
-}
-
-.stats_top {
-  padding: 5px 0px;
-}
-
-.stats_bottom {
-  aspect-ratio: 1/0.5;
+  border-bottom: 1px gray solid;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  box-sizing: border-box;
-  align-items: flex-end;
 }
 
-.stat_bar {
-  height: 100%;
-  background-color: rgb(59, 59, 59);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  width: 40px;
+.stats_chart_top_left{
+  width: 20%;
+  min-width: 100px;
+}
+
+.stats_chart_top_right{
   display: flex;
+  flex-direction: row;
+  gap: 10px;
   justify-content: center;
+  align-items: center;
 }
 
-.stat_bar_amount {
-  margin-top: 10px;
-  color: white;
+.stats_chart_bottom{
+  background-color: rgb(52, 52, 52);
+  flex: 1;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 50px;
+  box-sizing: border-box;
+  align-items: end;
+  padding: 20px;
+}
+
+.stat_chart_stat{
+  display: flex;
+  flex-direction: row;
+  height: 95%;
+  align-items: end;
+  gap: 2px;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.stat_chart_stat_total{
+  width: 40px;
+  text-align: center;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+.stat_chart_stat_profit{
+  width: 40px;
+  text-align: center;
+  background-color: rgb(114, 255, 95);
+  flex-shrink: 0;
+}
+
+.stat_chart_stat_profit_value{
+  color: rgb(114, 255, 95);
+  margin-top: -20px;
+}
+
+.stat_chart_stat_total_value{
+  color: rgb(255, 255, 255);
+  margin-top: -20px;
 }
