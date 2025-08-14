@@ -29,7 +29,7 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
       - name: Debug
-        run: echo "✅ Build finished, proceeding to deploy..."
+        run: echo "Build finished, proceeding to deploy..."
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
